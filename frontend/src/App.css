@@ -1,0 +1,14 @@
+.empty_block {
+  height: 60px;
+}
+
+body {
+  background-image: url("../public/assets/img/background.png");
+  background-repeat: repeat;
+}
+
+html, body {
+  font-family:'Maven Pro'!important;
+  color: rgb(36, 44, 60);
+  /* overflow-y: hidden; */
+}
