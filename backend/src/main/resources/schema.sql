@@ -106,15 +106,15 @@ CREATE TABLE works_at (
 );
 
 CREATE TABLE species (
-	species_name VARCHAR(50) NOT NULL,
-    PRIMARY KEY (species_name)
+	species VARCHAR(50) NOT NULL,
+    PRIMARY KEY (species)
 );
 
 CREATE TABLE breed (
 	species VARCHAR(50) NOT NULL,
     breed VARCHAR(70) NOT NULL,
     PRIMARY KEY (species, breed),
-    FOREIGN KEY (species) REFERENCES species(species_name)
+    FOREIGN KEY (species) REFERENCES species(species)
 );
 
 -- I: on id

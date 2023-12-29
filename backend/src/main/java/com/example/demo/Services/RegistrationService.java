@@ -1,8 +1,9 @@
 package com.example.demo.Services;
 
-import com.example.demo.Entities.*;
-import com.example.demo.Repositories.*;
-import com.example.demo.Services.EmailSender.Email;
+import com.example.demo.Entities.AccountEntites.*;
+import com.example.demo.Entities.RecordsEntities.verification;
+import com.example.demo.Repositories.AccountRepositories.*;
+import com.example.demo.Repositories.RecordsRepositories.verificationRepository;
 import com.example.demo.Services.EmailSender.EmailService;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class RegistrationService {
     private staffRepository staffrepository;
     private managerRepository managerrepository;
     private sys_adminRepository sys_adminrepository;
-    private verificationRepository verificationRepository;
+    private com.example.demo.Repositories.RecordsRepositories.verificationRepository verificationRepository;
     private EmailService emailService;
 
 

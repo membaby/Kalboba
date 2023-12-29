@@ -1,13 +1,13 @@
 package com.example.demo.Controllers;
 
-import com.example.demo.Entities.*;
-import com.example.demo.Repositories.adopterRepository;
-import com.example.demo.Repositories.staffRepository;
-import com.example.demo.Repositories.user_accountRepository;
+import com.example.demo.Entities.AccountEntites.Gender;
+import com.example.demo.Entities.AccountEntites.User_class;
+import com.example.demo.Entities.AccountEntites.user_account;
+import com.example.demo.Repositories.AccountRepositories.staffRepository;
+import com.example.demo.Repositories.AccountRepositories.user_accountRepository;
 import com.example.demo.Services.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
