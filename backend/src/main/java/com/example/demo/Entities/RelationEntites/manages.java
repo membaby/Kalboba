@@ -25,7 +25,7 @@ public class manages {
 
     @Id
     @MapsId("manager_id")
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "manager_id", referencedColumnName = "id")
     private com.example.demo.Entities.AccountEntites.manager manager;
 

@@ -146,9 +146,10 @@ CREATE TABLE doc_type (
 
 -- I: on pet_id
 CREATE TABLE pet_doc (
-	pet_id INT NOT NULL,
+    pet_id INT NOT NULL,
     doctype INT NOT NULL,
     document MEDIUMBLOB NOT NULL,
+    PRIMARY KEY (pet_id, doctype),
     FOREIGN KEY (pet_id) REFERENCES pet(id),
     FOREIGN KEY (doctype) REFERENCES doc_type(type_no)
 );
@@ -172,39 +173,41 @@ CREATE TABLE sheltered_at (
 -- I: on shelter_id
 -- T: On updating status to Accepted (completed) or Rejected, record is moved to closed table.
 CREATE TABLE adoption_application_open (
-	pet_id INT NOT NULL,
+    pet_id INT NOT NULL,
     adopter_id INT NOT NULL,
     shelter_id INT NOT NULL,
     time_stamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    app_status ENUM('Unopened', 'Under Review', 'Rejected', 'Accepted (in progress)', 'Accepted (completed)') NOT NULL DEFAULT 'Unopened',
-    first_pet BOOL NOT NULL, -- Required field
-    children_ages VARCHAR(500) NOT NULL, -- Required field
-    place_for_pet VARCHAR(500) NOT NULL, -- Required field
-    tolerance VARCHAR(500) NOT NULL, -- Required field
-    adopters_time VARCHAR(500) NOT NULL, -- Required field
+    app_status ENUM('Unopened', 'UnderReview', 'Rejected', 'Accepted_Open', 'Accepted_Completed') NOT NULL DEFAULT 'Unopened',
+    first_pet BOOL NOT NULL,
+    children_ages VARCHAR(500) NOT NULL,
+    place_for_pet VARCHAR(500) NOT NULL,
+    tolerance VARCHAR(500) NOT NULL,
+    adopters_time VARCHAR(500) NOT NULL,
     PRIMARY KEY (pet_id, adopter_id, shelter_id),
     FOREIGN KEY (pet_id) REFERENCES pet(id),
     FOREIGN KEY (adopter_id) REFERENCES adopter(id),
     FOREIGN KEY (shelter_id) REFERENCES shelter(id)
 );
 
+
 -- I: on shelter_id
 CREATE TABLE adoption_application_closed (
-	pet_id INT NOT NULL,
+    pet_id INT NOT NULL,
     adopter_id INT NOT NULL,
     shelter_id INT NOT NULL,
     time_stamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    app_status ENUM('Rejected', 'Accepted (completed)') NOT NULL,
-    first_pet BOOL NOT NULL, -- Required field
-    children_ages VARCHAR(500) NOT NULL, -- Required field
-    place_for_pet VARCHAR(500) NOT NULL, -- Required field
-    tolerance VARCHAR(500) NOT NULL, -- Required field
-    adopters_time VARCHAR(500) NOT NULL, -- Required field
+    app_status ENUM('Rejected', 'Accepted_Completed') NOT NULL,
+    first_pet BOOL NOT NULL,
+    children_ages VARCHAR(500) NOT NULL,
+    place_for_pet VARCHAR(500) NOT NULL,
+    tolerance VARCHAR(500) NOT NULL,
+    adopters_time VARCHAR(500) NOT NULL,
     PRIMARY KEY (pet_id, adopter_id, shelter_id),
     FOREIGN KEY (pet_id) REFERENCES pet(id),
     FOREIGN KEY (adopter_id) REFERENCES adopter(id),
     FOREIGN KEY (shelter_id) REFERENCES shelter(id)
 );
+
 
 -- I: on pet_id
 -- T: Whenever inserting a record here, find the record in sheltered_at table which has matching
