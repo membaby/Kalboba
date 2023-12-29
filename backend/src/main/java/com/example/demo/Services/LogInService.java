@@ -9,7 +9,7 @@ public class LogInService {
     public LogInService() {
     }
 
-    public boolean LogInUser() {
+    public boolean LogInUser(String emailOrUsername, String password) {
         // TODO implement here
         return false;
     }
