@@ -5,6 +5,32 @@ import  secureLocalStorage  from  "react-secure-storage";
 
 const RegisterComponent = () => {
 
+    const register = () => {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const verifyPassword = document.getElementById('verifyPassword').value;
+        const firstName = document.getElementById('firstName').value;
+        const lastName = document.getElementById('lastName').value;
+        const body = JSON.stringify({
+            email: email,
+            password: password,
+            verifyPassword: verifyPassword,
+            firstName: firstName,
+            lastName: lastName
+        });
+        // makeRequest('register', 'POST', body)
+        //     .then(response => {
+        //         secureLocalStorage.setItem("token", response.token);
+        //         secureLocalStorage.setItem("user", JSON.stringify(response.user));
+        //         window.location.href = "/home";
+        //     })
+        //     .catch(error => {
+        //         console.error("Error logging in:", error);
+        //         alert("Error logging in.");
+        //     });
+
+    }
+
     return(
         <>
     <div class="container signing-panel2">
