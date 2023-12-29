@@ -3,7 +3,6 @@ CREATE DATABASE Petfecto;
 USE Petfecto;
 
 -- The general user account
--- I: on id
 -- T: When inserting a new record, verification record is added.
 -- Backend logic: To verify something, update verified = true and delete the verification record only.
 CREATE TABLE user_account (
@@ -42,7 +41,6 @@ CREATE TABLE notification (
     FOREIGN KEY (account_id) REFERENCES user_account(id)
 );
 
--- I: on id
 -- T: If id exists in any other user class, reject insert
 -- Permissions: No insertion (only by verification trigger)
 -- Backend: OTP must only be sent to admins not the person himself
@@ -52,7 +50,6 @@ CREATE TABLE sys_admin (
     FOREIGN KEY (id) REFERENCES user_account(id)
 );
 
--- I: on id
 -- T: If id exists in any other user class, reject insert
 -- Permissions: No insertion (only by verification trigger)
 CREATE TABLE manager (
@@ -61,7 +58,6 @@ CREATE TABLE manager (
     FOREIGN KEY (id) REFERENCES user_account(id)
 );
 
--- I: on id
 -- T: If id exists in any other user class, reject insert
 -- Permissions: No insertion (only by verification trigger)
 CREATE TABLE staff (
@@ -70,7 +66,6 @@ CREATE TABLE staff (
     FOREIGN KEY (id) REFERENCES user_account(id)
 );
 
--- I: on id
 -- T: If id exists in any other user class, reject insert
 -- Permissions: No insertion (only by verification trigger)
 CREATE TABLE adopter (
@@ -80,7 +75,6 @@ CREATE TABLE adopter (
     FOREIGN KEY (id) REFERENCES user_account(id)
 );
 
--- I: on id
 CREATE TABLE shelter (
 	id INT NOT NULL AUTO_INCREMENT,
     shelter_name VARCHAR(70) NOT NULL,
@@ -161,9 +155,9 @@ CREATE TABLE pet_doc (
     FOREIGN KEY (doctype) REFERENCES doc_type(type_no)
 );
 
--- I: on pet_id
+-- I: on shelter_id (staff query to view their shelter's pets)
 -- T: Inserting a record into this table deletes records with same pet_id in adopted_by 
---    and sets this pet's adoption status to false, if it is already false, reject operation.
+--    and sets this pet's adoption status to false.
 -- Note 1: This table can have the same pet given to the same shelter twice (e.g. owner didn't want it).
 -- Note 2: This table keeps a history of shelters the animal has been to with the sheltering period.
 CREATE TABLE sheltered_at (
@@ -197,6 +191,7 @@ CREATE TABLE adoption_application_open (
 );
 
 -- I: on shelter_id
+-- Permissions: No insertion (done by the open adoption application triggers)
 CREATE TABLE adoption_application_closed (
 	pet_id INT NOT NULL,
     adopter_id INT NOT NULL,
@@ -216,7 +211,7 @@ CREATE TABLE adoption_application_closed (
 
 -- I: on pet_id
 -- T: Whenever inserting a record here, find the record in sheltered_at table which has matching
---    pet_id and null end_date and set end_date to cuurent date, otherwise if not found reject operation.
+--    pet_id and null end_date and set end_date to current date.
 --    Also, set the pet adoption status to true, and if it is already true, reject operation.
 CREATE TABLE adopted_by (
 	pet_id INT NOT NULL,
