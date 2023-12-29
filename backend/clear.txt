@@ -1,0 +1,9 @@
+netstat -ano | findstr :8080
+taskkill /PID 12940 /F
+doctorkomdb@gmail.com
+doctorkomegy@outlook.com
+DocTGMKS2025
+hywa ekfi yiwk jpoh
+
+
+PETMMDT2025
