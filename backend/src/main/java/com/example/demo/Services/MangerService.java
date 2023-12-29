@@ -1,5 +1,6 @@
 package com.example.demo.Services;
 
+import com.example.demo.Entities.AccountEntites.shelter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,23 +11,23 @@ public class MangerService {
     public MangerService() {
     }
 
-    public void EditProfile() {
+    /*public void EditProfile() {
+        // TODO implement here
+    }*/
+
+    public void EditShelterInformation(shelter myshelter) {
         // TODO implement here
     }
 
-    public void EditShelterInformation() {
+    public void AddStaffToShelter(String staffEmail,Integer shelterID) {
         // TODO implement here
     }
 
-    public void AddStaffToShelter() {
+    public void RemoveStaffFromShelter(String staffEmail,Integer shelterID) {
         // TODO implement here
     }
 
-    public void RemoveStaffFromShelter() {
-        // TODO implement here
-    }
-
-    public void AddShelter() {
+    public void AddShelter(shelter newShelter) {
         // TODO implement here
     }
 
