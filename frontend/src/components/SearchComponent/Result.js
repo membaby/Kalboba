@@ -12,7 +12,7 @@ export default function Result( { details } ) {
                     </div>
                 </div>
                 <div className="col">
-                    <a href={`/adopt/`+details.id}><button className="result-button result-button-primary w-100 mt-3 mb-3">Adopt Now</button></a>
+                    <a href={`/details/`+details.id}><button className="result-button result-button-primary w-100 mt-3 mb-3">Adopt Now</button></a>
                     <span className="text-primary text-uppercase">{details.species}</span>
                     <h4>{details.name}</h4>
                     <div className="mt-3">
