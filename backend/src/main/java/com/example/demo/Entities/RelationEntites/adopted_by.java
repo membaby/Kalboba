@@ -16,14 +16,20 @@ import lombok.NoArgsConstructor;
 public class adopted_by {
 
         @Id
+        @Column(name = "pet_id")
+        private Integer pet_id;
+
+        @Id
+        @Column(name = "adopter_id")
+        private Integer adopter_id;
+
         @MapsId("pet_id")
         @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
         @JoinColumn(name = "pet_id", referencedColumnName = "id")
-        private com.example.demo.Entities.PetEntities.pet pet_id;
-
-        @Id
+        private com.example.demo.Entities.PetEntities.pet pet;
+        
         @MapsId("adopter_id")
         @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
         @JoinColumn(name = "adopter_id", referencedColumnName = "id")
-        private com.example.demo.Entities.AccountEntites.adopter adopter_id;
+        private com.example.demo.Entities.AccountEntites.adopter adopter;
 }
