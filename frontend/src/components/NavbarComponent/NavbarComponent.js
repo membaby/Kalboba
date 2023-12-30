@@ -4,25 +4,30 @@ import  secureLocalStorage  from  "react-secure-storage";
 
 const NavbarComponent = () => {
 
-    const [links, setLinks] = useState([
+    const defaultLinks = [
         {'name': 'Home', 'Link': '/'},
         {'name': 'Pet Adoption', 'Link': '/adopt'},
-    ])
-    const [role, setRole] = useState(secureLocalStorage.getItem('role'))
+    ]
+
+    const [links, setLinks] = useState([])
+    const role = secureLocalStorage.getItem('user_class');
     const [notifications, setNotifications] = useState([
         {'title': 'Application Status', 'body': 'Your application for Fluffy has been approved!'},
         {'title': 'Application Status', 'body': 'Your application for Fluffy has been approved!'},
         {'title': 'Application Status', 'body': 'Your application for Fluffy has been approved!'},
     ]);
     useEffect(() => {
-        let tempLinks = [...links]
-        if (role === 'admin') {
+        let tempLinks = [...defaultLinks]
+        if (role === 'Admin') {
             tempLinks.push({'name': 'Admin', 'Link': '/admin'})
             tempLinks.push({'name': 'Logout', 'Link': '/logout'})
-        } else if (role === 'shelter') {
+        } else if (role === 'Manager') {
             tempLinks.push({'name': 'Shelter', 'Link': '/shelter'})
             tempLinks.push({'name': 'Logout', 'Link': '/logout'})
-        } else if (role === 'user') {
+        } else if (role === 'Staff') {
+            tempLinks.push({'name': 'Applications', 'Link': '/apps'})
+            tempLinks.push({'name': 'Logout', 'Link': '/logout'})
+        } else if (role === 'Adopter') {
             tempLinks.push({'name': 'Logout', 'Link': '/logout'})
         } else if (role === null) { 
             tempLinks.push({'name': 'Login', 'Link': '/login'})
