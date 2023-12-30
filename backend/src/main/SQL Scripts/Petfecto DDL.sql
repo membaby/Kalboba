@@ -43,7 +43,6 @@ CREATE TABLE notification (
     FOREIGN KEY (account_id) REFERENCES user_account(id)
 );
 
--- T: If id exists in any other user class, reject insert
 -- Permissions: No insertion (only by verification trigger)
 -- Backend: OTP must only be sent to admins not the person himself
 CREATE TABLE sys_admin (
@@ -52,7 +51,6 @@ CREATE TABLE sys_admin (
     FOREIGN KEY (id) REFERENCES user_account(id)
 );
 
--- T: If id exists in any other user class, reject insert
 -- Permissions: No insertion (only by verification trigger)
 CREATE TABLE manager (
 	id INT NOT NULL,
@@ -60,7 +58,6 @@ CREATE TABLE manager (
     FOREIGN KEY (id) REFERENCES user_account(id)
 );
 
--- T: If id exists in any other user class, reject insert
 -- Permissions: No insertion (only by verification trigger)
 CREATE TABLE staff (
 	id INT NOT NULL,
@@ -68,7 +65,6 @@ CREATE TABLE staff (
     FOREIGN KEY (id) REFERENCES user_account(id)
 );
 
--- T: If id exists in any other user class, reject insert
 -- Permissions: No insertion (only by verification trigger)
 CREATE TABLE adopter (
 	id INT NOT NULL,
@@ -122,7 +118,6 @@ CREATE TABLE breed (
     FOREIGN KEY (species) REFERENCES species(species)
 );
 
--- I: on id
 CREATE TABLE pet (
 	id INT NOT NULL AUTO_INCREMENT,
 	pet_name VARCHAR(100) NOT NULL DEFAULT 'Unnamed',
