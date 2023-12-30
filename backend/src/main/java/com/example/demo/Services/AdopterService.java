@@ -3,6 +3,7 @@ package com.example.demo.Services;
 import com.example.demo.Entities.AccountEntites.adopter;
 import com.example.demo.Entities.AccountEntites.shelter;
 import com.example.demo.Entities.PetEntities.pet;
+import com.example.demo.Entities.RecordsEntities.Status;
 import com.example.demo.Entities.RecordsEntities.adoption_application_open;
 import com.example.demo.Repositories.AccountRepositories.adopterRepository;
 import com.example.demo.Repositories.AccountRepositories.shelterRepository;
@@ -57,6 +58,7 @@ public class AdopterService {
         }
 
         application.setShelter_id(myShelter.getId());
+        application.setStatus(Status.Unopened);
         application.setPet(myPet);
         application.setAdopter(myAdopter);
         application.setShelter(myShelter);

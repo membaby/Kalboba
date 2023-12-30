@@ -30,6 +30,7 @@ public class ShelterService {
     private petRepository petrepository;
     private adoption_application_closedRepository adoption_application_currentrepository;
     private adoption_application_openRepository adoption_application_openrepository;
+    private NotificationService notificationService;
 
 
     @Autowired
@@ -39,7 +40,8 @@ public class ShelterService {
             sheltered_atRepository sheltered_atrepository,
             petRepository petrepository,
             adoption_application_closedRepository adoption_application_currentrepository,
-            adoption_application_openRepository adoption_application_openrepository
+            adoption_application_openRepository adoption_application_openrepository,
+            NotificationService notificationService
 
     ) {
         this.shelterrepository = shelterrepository;
@@ -48,6 +50,7 @@ public class ShelterService {
         this.petrepository = petrepository;
         this.adoption_application_currentrepository = adoption_application_currentrepository;
         this.adoption_application_openrepository = adoption_application_openrepository;
+        this.notificationService = notificationService;
     }
 
     public shelter ViewShelterInformation(int shelterID) {
@@ -85,6 +88,7 @@ public class ShelterService {
         }
         app.setStatus(Status.UnderReview);
         adoption_application_openrepository.save(app);
+        notificationService.sendNotification("Your application for pet " + petID + " is under review", adopterID);
 
         // TODO implement here
         return "Done";
@@ -97,6 +101,7 @@ public class ShelterService {
         }
         app.setStatus(Status.Accepted_Open);
         adoption_application_openrepository.save(app);
+        notificationService.sendNotification("Your application for pet " + petID + " is accepted waiting for pick up", adopterID);
         // TODO implement here
         return "Done";
     }
@@ -108,6 +113,7 @@ public class ShelterService {
         }
         app.setStatus(Status.Accepted_Completed);
         adoption_application_openrepository.save(app);
+        notificationService.sendNotification("Your application for pet " + petID + " is Completed", adopterID);
         // TODO implement here
         return "Done";
     }
@@ -119,6 +125,7 @@ public class ShelterService {
         }
         app.setStatus(Status.Rejected);
         adoption_application_openrepository.save(app);
+        notificationService.sendNotification("Your application for pet " + petID + " is Rejected", adopterID);
         // TODO implement here
         return "Done";
     }

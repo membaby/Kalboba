@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
 @Entity
 @Table(name = "notification")
 @Data
@@ -30,7 +32,7 @@ public class notification {
     private boolean viewed;
 
     @Column(name = "time_stamp")
-    private String time_stamp;
+    private Timestamp time_stamp;
 
     @Column(name = "message")
     private String message;

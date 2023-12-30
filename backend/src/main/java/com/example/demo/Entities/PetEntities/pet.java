@@ -44,6 +44,7 @@ public class pet {
     private String health;
 
     @Column(name = "fertility")
+    @Enumerated(EnumType.STRING)
     private Fertility fertility;
 
     @Column(name = "adopted")
