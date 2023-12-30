@@ -22,7 +22,7 @@ const NavbarComponent = () => {
         } else if (role === 'shelter') {
             tempLinks.push({'name': 'Shelter', 'Link': '/shelter'})
             tempLinks.push({'name': 'Logout', 'Link': '/logout'})
-        } else if (role === 'user' || true) {
+        } else if (role === 'user') {
             tempLinks.push({'name': 'Logout', 'Link': '/logout'})
         } else if (role === null) { 
             tempLinks.push({'name': 'Login', 'Link': '/login'})
@@ -49,7 +49,7 @@ const NavbarComponent = () => {
                             </li>
                         ))}
                     </ul>
-                    {role === "x" ? (
+                    {role === null ? (
                         <a className="btn btn-primary ms-md-2" role="button" href="/register">Register</a>
                     ) : (
                         <>
