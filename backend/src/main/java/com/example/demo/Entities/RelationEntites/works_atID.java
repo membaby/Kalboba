@@ -16,5 +16,6 @@ public class works_atID implements Serializable {
     private com.example.demo.Entities.AccountEntites.staff staff;
     private com.example.demo.Entities.AccountEntites.shelter shelter;
 
+
     // Constructors, getters, setters, equals, and hashCode methods
 }
