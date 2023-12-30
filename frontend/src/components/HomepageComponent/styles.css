@@ -11,3 +11,8 @@
         1px 1px 0 #000;
 
 }
+
+.imgborder {
+    border: 1px solid #080808;
+    border-radius: 10px;
+}

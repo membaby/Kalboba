@@ -10,7 +10,7 @@ import java.sql.Date;
 @Builder
 @Value
 public class user_accountDTO {
-    int id;
+    Integer id;
     String email;
     String username;
     String password;
