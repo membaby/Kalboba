@@ -2,21 +2,32 @@ import './styles.css'
 import React, { useEffect, useState } from 'react';
 import  secureLocalStorage  from  "react-secure-storage";
 
-
 const NavbarComponent = () => {
 
-    const [links, setLinks] = useState([
+    const defaultLinks = [
         {'name': 'Home', 'Link': '/'},
         {'name': 'Pet Adoption', 'Link': '/adopt'},
-    ])
-    const [role, setRole] = useState(secureLocalStorage.getItem('role'))
+    ]
+
+    const [links, setLinks] = useState([])
+    const role = secureLocalStorage.getItem('user_class');
+    const [notifications, setNotifications] = useState([
+        {'title': 'Application Status', 'body': 'Your application for Fluffy has been approved!'},
+        {'title': 'Application Status', 'body': 'Your application for Fluffy has been approved!'},
+        {'title': 'Application Status', 'body': 'Your application for Fluffy has been approved!'},
+    ]);
     useEffect(() => {
-        let tempLinks = [...links]
-        if (role === 'admin') {
+        let tempLinks = [...defaultLinks]
+        if (role === 'Admin') {
             tempLinks.push({'name': 'Admin', 'Link': '/admin'})
             tempLinks.push({'name': 'Logout', 'Link': '/logout'})
-        } else if (role === 'shelter') {
+        } else if (role === 'Manager') {
             tempLinks.push({'name': 'Shelter', 'Link': '/shelter'})
+            tempLinks.push({'name': 'Logout', 'Link': '/logout'})
+        } else if (role === 'Staff') {
+            tempLinks.push({'name': 'Applications', 'Link': '/apps'})
+            tempLinks.push({'name': 'Logout', 'Link': '/logout'})
+        } else if (role === 'Adopter') {
             tempLinks.push({'name': 'Logout', 'Link': '/logout'})
         } else if (role === null) { 
             tempLinks.push({'name': 'Login', 'Link': '/login'})
@@ -46,7 +57,20 @@ const NavbarComponent = () => {
                     {role === null ? (
                         <a className="btn btn-primary ms-md-2" role="button" href="/register">Register</a>
                     ) : (
-                        <a className="btn btn-primary ms-md-2" role="button" href="/applications">Applications</a>
+                        <>
+                            <a className="btn btn-primary ms-md-2" role="button" href="/applications">Applications</a>
+                            <div className={`notification-badge text-center ${notifications.length ? "bg-danger" : "bg-primary"}`}>{notifications.length}
+                                <div className="notifications">
+                                    {notifications.map((notification) => (
+                                        <div className="notification">
+                                            <div className="notification-title">{notification.title}</div>
+                                            <div className="notification-body">{notification.body}</div>
+                                            <hr/>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </>
                     )}
                 </div>
             </div>

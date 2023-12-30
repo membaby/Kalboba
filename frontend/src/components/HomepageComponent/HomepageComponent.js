@@ -8,7 +8,10 @@ const HomepageComponent = () => {
     const location = useLocation()
     useEffect(() => {
         if (location.pathname === "/logout") {
-            secureLocalStorage.removeItem("role");
+            secureLocalStorage.removeItem("id");
+            secureLocalStorage.removeItem("email");
+            secureLocalStorage.removeItem("user_class");
+            secureLocalStorage.removeItem("username");
             console.log("Logged out");
         }
     }, []);
@@ -92,12 +95,12 @@ const HomepageComponent = () => {
                 </div>
             </div>
             <div className="row gx-2 gy-2 row-cols-1 row-cols-md-2 row-cols-xl-3 photos" data-bss-baguettebox="">
-                <div className="col item"><img className="img-fluid" src="/assets/img/sheep.png" /></div>
-                <div className="col item"><img className="img-fluid" src="/assets/img/killed-sheep.png" /></div>
-                <div className="col item"><img className="img-fluid" src="/assets/img/duck.png" /></div>
-                <div className="col item"><img className="img-fluid" src="/assets/img/pigeon.png" /></div>
-                <div className="col item"><img className="img-fluid" src="/assets/img/turkey.png" /></div>
-                <div className="col item"><img className="img-fluid" src="/assets/img/cow.png" /></div>
+                <div className="col item"><img className="img-fluid imgborder" src="/assets/img/stray/1.png" /></div>
+                <div className="col item"><img className="img-fluid imgborder" src="/assets/img/stray/2.png" /></div>
+                <div className="col item"><img className="img-fluid imgborder" src="/assets/img/stray/6.png" /></div>
+                <div className="col item"><img className="img-fluid imgborder" src="/assets/img/stray/3.png" /></div>
+                <div className="col item"><img className="img-fluid imgborder" src="/assets/img/stray/4.png" /></div>
+                <div className="col item"><img className="img-fluid imgborder" src="/assets/img/stray/5.png" /></div>
             </div>
         </div>
     </section>

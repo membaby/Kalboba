@@ -31,7 +31,7 @@ const SearchComponent = () => {
     return (
         <div>
             <div class="container py-2 py-xl-2">
-                <h2>Find your new best friend</h2>
+                <h2>Search</h2>
                 <h5>Browse pets from our network shelters and rescues.</h5>
                 <hr/>
                 <div className="text-center">

@@ -1,9 +1,42 @@
 import './styles.css'
 import React, { useEffect, useState } from 'react';
-import  secureLocalStorage  from  "react-secure-storage";
-
+import makeRequest from '../../functions/request'
+import hashString from '../../functions/hashString';
+import { store as Store } from 'react-notifications-component';
+import secureLocalStorage from 'react-secure-storage';
 
 const LoginComponent = () => {
+    
+    const login = () => {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const body = JSON.stringify({
+            username: email,
+            password: hashString(password)
+        });
+        makeRequest('Login', 'POST', body)
+            .then(response => {
+                secureLocalStorage.setItem("id", response.id);
+                secureLocalStorage.setItem("username", response.username);
+                secureLocalStorage.setItem("email", response.email);
+                secureLocalStorage.setItem("user_class", response.user_class);
+                
+                if (response.user_class === "Admin") {
+                    window.location.href = "/admin";
+                } else if (response.user_class === "Manager") {
+                    window.location.href = "/shelter";
+                } else if (response.user_class === "Adopter") {
+                    window.location.href = "/adopt";
+                } else if (response.user_class === "Staff") {
+                    window.location.href = "/staff";
+                }
+            })
+            .catch(error => {
+                console.error("Error logging in:", error);
+                alert("Error logging in.");
+            });
+
+    }
 
     return(
         <>
@@ -14,16 +47,14 @@ const LoginComponent = () => {
                         <div class="text-center">
                             <h4 class="text-dark mb-4">Login</h4>
                         </div>
-                        <form class="user">
-                            <div class="mb-3"><input class="form-control form-control-user" type="text" placeholder="Username" required="" /></div>
+                        <div class="user">
                             <div class="mb-3"><input class="form-control form-control-user" type="email" id="email" placeholder="Email Address" required="" /></div>
+                            <div class="mb-3"><input class="form-control form-control-user" type="password" id="password" placeholder="Password" required="" /></div>
                             <div class="row mb-3">
-                                {/* <p id="emailErrorMsg" class="text-danger" style="display:none;">Paragraph</p>
-                                <p id="passwordErrorMsg" class="text-danger" style="display:none;">Paragraph</p> */}
                             </div>
-                            <button class="btn btn-primary d-block btn-user w-100" id="submitBtn" type="submit">Login</button>
+                            <button class="btn btn-primary d-block btn-user w-100" onClick={login}>Login</button>
                             <hr />
-                        </form>
+                        </div>
                         <div class="text-center"></div>
                         <div class="text-center"><a class="small" href="/register">Don't have an account? Register!</a></div>
                     </div>

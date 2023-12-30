@@ -98,7 +98,7 @@ public class MangerService {
 
     private synchronized int saveShelter(shelter sh) {
         shelterrepository.save(sh);
-        return shelterrepository.findMaxId();
+        return shelterrepository.findMaxId() + 1;
     }
 
     public String AddShelter(shelter newShelter,int managerID) {
