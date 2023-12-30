@@ -119,6 +119,7 @@ public class MangerService {
                     .end_date(null)
                     .build();
             mannagesrepository.save(newmanages);
+            return "Success";
         }
         return "Done";
     }
