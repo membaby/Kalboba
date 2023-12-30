@@ -19,7 +19,7 @@ public class pet {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "name")
+    @Column(name = "pet_name")
     private String name;
 
     @Column(name = "color")

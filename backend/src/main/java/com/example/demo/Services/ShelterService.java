@@ -12,6 +12,7 @@ import com.example.demo.Repositories.PetRepositories.petRepository;
 import com.example.demo.Repositories.AccountRepositories.shelterRepository;
 import com.example.demo.Repositories.RecordsRepositories.adoption_application_closedRepository;
 import com.example.demo.Repositories.RecordsRepositories.adoption_application_openRepository;
+import com.example.demo.Repositories.RelationRepositories.adopted_byRepository;
 import com.example.demo.Repositories.RelationRepositories.sheltered_atRepository;
 import com.example.demo.Repositories.RelationRepositories.works_atRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +24,13 @@ import java.util.List;
 @Service
 public class ShelterService {
 
-    private shelterRepository shelterrepository;
     private works_atRepository works_atrepository;
+    private shelterRepository shelterrepository;
     private sheltered_atRepository sheltered_atrepository;
     private petRepository petrepository;
     private adoption_application_closedRepository adoption_application_currentrepository;
     private adoption_application_openRepository adoption_application_openrepository;
+
 
     @Autowired
     public ShelterService(
@@ -38,6 +40,7 @@ public class ShelterService {
             petRepository petrepository,
             adoption_application_closedRepository adoption_application_currentrepository,
             adoption_application_openRepository adoption_application_openrepository
+
     ) {
         this.shelterrepository = shelterrepository;
         this.works_atrepository = works_atrepository;

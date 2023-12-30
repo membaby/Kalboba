@@ -20,6 +20,10 @@ public class breed {
     private String breed;
 
     @Id
+    @Column(name = "species")
+    private String species;
+    
+    @MapsId("species")
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "species")
     private species speciesOfBreed;
