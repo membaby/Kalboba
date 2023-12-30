@@ -24,9 +24,13 @@ public class SearchService {
         this.petRepository = petRepository;
     }
 
-    public List<pet> searchPets(Map<String, String> searchParams, int pageNumber, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        return petRepository.findAll(createSearchSpecification(searchParams), pageable).getContent();
+    public List<pet> searchPets(Map<String, String> searchParams, int pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber, 10);
+        Specification<pet> petSpecification = createSearchSpecification(searchParams);
+        List<pet> results = petRepository.findAll(petSpecification, pageable).getContent();
+
+        
+        return results;
     }
 
     private <T> Specification<T> createSearchSpecification(Map<String, String> searchParams) {

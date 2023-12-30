@@ -19,8 +19,8 @@ public class pet {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "pet_name")
+    private String pet_name;
 
     @Column(name = "color")
     private String color;
@@ -44,6 +44,7 @@ public class pet {
     private String health;
 
     @Column(name = "fertility")
+    @Enumerated(EnumType.STRING)
     private Fertility fertility;
 
     @Column(name = "adopted")
