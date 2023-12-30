@@ -10,6 +10,7 @@ import LoginComponent from './components/LoginComponent/LoginComponent';
 import SearchComponent from './components/SearchComponent/SearchComponent';
 import AdoptionComponent from './components/AdoptionComponent/AdoptionComponent';
 import ApplicationsComponent from './components/AdoptionComponent/ApplicationsComponent.js';
+import VerificationComponent from './components/VerificationComponent/VerificationComponent';
 import DetailsComponent from './components/DetailsComponent/DetailsComponent';
 
 import { ReactNotifications } from 'react-notifications-component'
@@ -35,6 +36,7 @@ function App() {
           <Route path='/adopt/:id' element={ <AdoptionComponent/> } />
           <Route path='/details/:id' element={ <DetailsComponent/> } />
           <Route path='/applications' element={ <ApplicationsComponent/> } />
+          <Route path='/verification' element={ <VerificationComponent/> } />
         </Routes>
     
       <FooterComponent />

@@ -43,7 +43,7 @@ public class TestController {
         account.setAddress("Talha");
         account.setGender(Gender.M);
         account.setBirthdate(new Date(2000, 1, 1));
-        return registrationService.VerifyAccount(account,"394686");
+        return registrationService.VerifyAccount(account.getEmail(),"394686");
     }
 
 

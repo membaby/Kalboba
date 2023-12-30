@@ -2,6 +2,7 @@ import './styles.css'
 import React, { useEffect, useState } from 'react';
 import  secureLocalStorage  from  "react-secure-storage";
 import makeRequest from '../../functions/request';
+import hashString from '../../functions/hashString';
 
 
 const RegisterComponent = () => {
@@ -27,7 +28,7 @@ const RegisterComponent = () => {
             enabled: true,
             email: email,
             username: username,
-            password: password,
+            password: hashString(password),
             gender: gender,
             user_class: role,
             first_name: firstName,
@@ -39,14 +40,33 @@ const RegisterComponent = () => {
 
         displayMessage("Registering...");
 
-        makeRequest('Register/User', 'POST', body)
-            .then(response => {
+        // makeRequest('Register/User', 'POST', body)
+        //     .then(response => {
+        //         window.location.href = "/verification";
+        //     })
+        //     .catch(error => {
+        //         console.error("Error logging in:", error);
+        //         alert("Error logging in.");
+        //     });
+
+        fetch('http://localhost:8080/Register/User', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: body
+        })
+        .then(response => {
+            if (response.ok) {
                 window.location.href = "/verification";
-            })
-            .catch(error => {
-                console.error("Error logging in:", error);
-                alert("Error logging in.");
-            });
+            } else {
+                displayMessage("Error registering.");
+            }
+        })
+        .catch(error => {
+            console.error("Error logging in:", error);
+            alert("Error logging in.");
+        });
 
     }
 
@@ -93,7 +113,7 @@ const RegisterComponent = () => {
                             <div class="col-sm-6 mb-3 mb-sm-0">
                                 <select id="role" className="form-control form-control-user">
                                     <option value="Adopter">Adopter</option>    
-                                    <option value="Manger">Manager</option>    
+                                    <option value="Manager">Manager</option>    
                                     <option value="Staff">Staff</option>    
                                     <option value="Admin">Admin</option>    
                                 </select>    

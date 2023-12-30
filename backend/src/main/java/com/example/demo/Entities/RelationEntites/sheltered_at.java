@@ -17,6 +17,14 @@ import java.sql.Date;
 @AllArgsConstructor
 public class sheltered_at {
 
+    @Id
+    @Column(name = "pet_id")
+    private Integer pet_id;
+
+    @Id
+    @Column(name = "shelter_id")
+    private Integer shelter_id;
+
     @Column(name = "start_date")
     private Date start_date;
 
@@ -26,17 +34,15 @@ public class sheltered_at {
     @Column(name = "reason_for_availability")
     private String reason_for_availability;
 
-    @Id
     @MapsId("pet_id")
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "pet_id", referencedColumnName = "id")
-    private com.example.demo.Entities.PetEntities.pet pet_id;
+    private com.example.demo.Entities.PetEntities.pet pet;
 
-    @Id
     @MapsId("shelter_id")
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "shelter_id", referencedColumnName = "id")
-    private com.example.demo.Entities.AccountEntites.shelter shelter_id;
+    private com.example.demo.Entities.AccountEntites.shelter shelter;
 
 
 }

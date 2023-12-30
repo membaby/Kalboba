@@ -57,7 +57,7 @@ public class RegistrationService {
             else if (user == User_class.Staff) {
                 return RegisterStaff(account);
             }
-            else if (user == User_class.Manger) {
+            else if (user == User_class.Manager) {
                 return RegisterManager(account);
             }
             else {
@@ -149,8 +149,8 @@ public class RegistrationService {
         return "Manager Registered";
     }
 
-    public String VerifyAccount(user_account account, String code) {
-        user_account newAccount = accountRepository.findByUsername(account.getUsername());
+    public String VerifyAccount(String emailAddress, String code) {
+        user_account newAccount = accountRepository.findByEmail(emailAddress);
         verification verification = verificationRepository.findByAccount(newAccount);
         if (verification == null) {
             return "Account Not Found";
@@ -160,7 +160,7 @@ public class RegistrationService {
                 accountRepository.save(newAccount);
                 verificationRepository.delete(verification);
                 try {
-                    emailService.SendAccountCreatedEmail(account.getEmail());
+                    emailService.SendAccountCreatedEmail(emailAddress);
                 } catch (MessagingException e) {
                     e.printStackTrace();
                 }

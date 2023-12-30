@@ -8,7 +8,10 @@ const HomepageComponent = () => {
     const location = useLocation()
     useEffect(() => {
         if (location.pathname === "/logout") {
-            secureLocalStorage.removeItem("role");
+            secureLocalStorage.removeItem("id");
+            secureLocalStorage.removeItem("email");
+            secureLocalStorage.removeItem("user_class");
+            secureLocalStorage.removeItem("username");
             console.log("Logged out");
         }
     }, []);
