@@ -97,8 +97,10 @@ public class MangerService {
     }
 
     private synchronized int saveShelter(shelter sh) {
+        System.out.println(shelterrepository.findMaxId());
         shelterrepository.save(sh);
-        return shelterrepository.findMaxId() + 1;
+        System.out.println(shelterrepository.findMaxId());
+        return shelterrepository.findMaxId();
     }
 
     public String AddShelter(shelter newShelter,int managerID) {
@@ -119,6 +121,7 @@ public class MangerService {
                     .end_date(null)
                     .build();
             mannagesrepository.save(newmanages);
+            return "Success";
         }
         return "Shelter Already Exists";
     }
