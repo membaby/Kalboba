@@ -1,15 +1,15 @@
 package com.example.demo.Services;
 
+import com.example.demo.Entities.AccountEntites.manager;
 import com.example.demo.Entities.AccountEntites.shelter;
-import com.example.demo.Entities.AccountEntites.staff;
 import com.example.demo.Entities.AccountEntites.user_account;
 import com.example.demo.Entities.RelationEntites.manages;
 import com.example.demo.Entities.RelationEntites.works_at;
-import com.example.demo.Entities.RelationEntites.works_atID;
+import com.example.demo.Repositories.AccountRepositories.managerRepository;
 import com.example.demo.Repositories.AccountRepositories.staffRepository;
 import com.example.demo.Repositories.AccountRepositories.user_accountRepository;
 import com.example.demo.Repositories.RelationRepositories.managesRepository;
-import com.example.demo.Repositories.RelationRepositories.shelterRepository;
+import com.example.demo.Repositories.AccountRepositories.shelterRepository;
 import com.example.demo.Repositories.RelationRepositories.works_atRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +27,7 @@ public class MangerService {
     private user_accountRepository accountRepository;
 
     private managesRepository mannagesrepository;
+    private managerRepository ManagerRepository;
 
     @Autowired
     public MangerService(
@@ -34,13 +35,15 @@ public class MangerService {
             staffRepository staffrepository,
             works_atRepository works_atrepository,
             user_accountRepository accountRepository,
-            managesRepository mannagesrepository
+            managesRepository mannagesrepository,
+            managerRepository ManagerRepository
     ) {
         this.shelterrepository = shelterrepository;
         this.staffrepository = staffrepository;
         this.works_atrepository = works_atrepository;
         this.accountRepository = accountRepository;
         this.mannagesrepository = mannagesrepository;
+        this.ManagerRepository = ManagerRepository;
     }
 
 
@@ -95,11 +98,14 @@ public class MangerService {
 
     public String AddShelter(shelter newShelter,int managerID) {
         if (newShelter.getId() == null) {
-            shelterrepository.save(newShelter);
-            newShelter = shelterrepository.findById(newShelter.getId()).orElse(null);
+            manager newmanager = ManagerRepository.findById(managerID).orElse(null);
+            if (newmanager == null) {
+                return "Manager Not Found";
+            }
+
             manages newmanages = manages.builder()
-                    .manager_id(managerID)
-                    .shelter_id(newShelter.getId())
+                    .manager(newmanager)
+                    .shelter(newShelter)
                     .start_date(new Date(System.currentTimeMillis()))
                     .end_date(null)
                     .build();

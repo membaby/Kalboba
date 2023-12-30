@@ -25,11 +25,11 @@ public class manages {
 
     @Id
     @Column(name = "manager_id")
-    private int manager_id;
+    private Integer manager_id;
 
     @Id
     @Column(name = "shelter_id")
-    private int shelter_id;
+    private Integer shelter_id;
 
     @MapsId("manager_id")
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})

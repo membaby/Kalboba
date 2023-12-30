@@ -18,15 +18,15 @@ public class adoption_application_closed {
 
     @Id
     @Column(name = "pet_id")
-    private int pet_id;
+    private Integer pet_id;
 
     @Id
     @Column(name = "adopter_id")
-    private int adopter_id;
+    private Integer adopter_id;
 
     @Id
     @Column(name = "shelter_id")
-    private int shelter_id;
+    private Integer shelter_id;
 
     @Column(name = "time_stamp")
     private java.sql.Timestamp time_stamp;

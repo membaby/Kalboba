@@ -37,11 +37,11 @@ public class works_at {
 
     @Id
     @Column(name = "staff_id")
-    private int staff_id;
+    private Integer staff_id;
 
     @Id
     @Column(name = "shelter_id")
-    private int shelter_id;
+    private Integer shelter_id;
 
 
     @MapsId("staff_id")

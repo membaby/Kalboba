@@ -19,11 +19,11 @@ public class sheltered_at {
 
     @Id
     @Column(name = "pet_id")
-    private int pet_id;
+    private Integer pet_id;
 
     @Id
     @Column(name = "shelter_id")
-    private int shelter_id;
+    private Integer shelter_id;
 
     @Column(name = "start_date")
     private Date start_date;

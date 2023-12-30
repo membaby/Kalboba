@@ -10,5 +10,5 @@ import java.util.List;
 
 @Repository
 public interface managesRepository extends JpaRepository<manages, managesID>, JpaSpecificationExecutor<manages> {
-    List<manages> findAllBymanager_id(int managerID);
+    List<manages> findAllBymanager_id(Integer managerID);
 }

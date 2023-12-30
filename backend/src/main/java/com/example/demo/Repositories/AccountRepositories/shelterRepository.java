@@ -1,4 +1,4 @@
-package com.example.demo.Repositories.RelationRepositories;
+package com.example.demo.Repositories.AccountRepositories;
 
 import com.example.demo.Entities.AccountEntites.shelter;
 import org.springframework.data.jpa.repository.JpaRepository;

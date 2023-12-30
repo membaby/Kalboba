@@ -2,12 +2,16 @@ package com.example.demo.Services;
 
 import com.example.demo.Entities.AccountEntites.shelter;
 import com.example.demo.Entities.AccountEntites.staff;
-import com.example.demo.Repositories.RelationRepositories.shelterRepository;
+import com.example.demo.Entities.PetEntities.pet;
+import com.example.demo.Entities.RelationEntites.sheltered_at;
+import com.example.demo.Repositories.PetRepositories.petRepository;
+import com.example.demo.Repositories.AccountRepositories.shelterRepository;
 import com.example.demo.Repositories.RelationRepositories.sheltered_atRepository;
 import com.example.demo.Repositories.RelationRepositories.works_atRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 
 @Service
@@ -16,15 +20,19 @@ public class ShelterService {
     private shelterRepository shelterrepository;
     private works_atRepository works_atrepository;
     private sheltered_atRepository sheltered_atrepository;
+    private petRepository petrepository;
+
     @Autowired
     public ShelterService(
             shelterRepository shelterrepository,
             works_atRepository works_atrepository,
-            sheltered_atRepository sheltered_atrepository
+            sheltered_atRepository sheltered_atrepository,
+            petRepository petrepository
     ) {
         this.shelterrepository = shelterrepository;
         this.works_atrepository = works_atrepository;
         this.sheltered_atrepository = sheltered_atrepository;
+        this.petrepository = petrepository;
     }
 
     public shelter ViewShelterInformation(int shelterID) {
@@ -33,24 +41,21 @@ public class ShelterService {
         // TODO implement here
     }
 
-    public List<staff> ViewShelterStaff() {
-        // TODO implement here
-        return null;
+    public List<staff> ViewShelterStaff(int shelterID) {
+        List<staff> staffList = works_atrepository.findStaffByshelter_id(shelterID);
+        return staffList;
     }
 
-    public void ViewShelterPets() {
-        // TODO implement here
+    public List<pet> ViewShelterPets(int shelterID) {
+        List<pet> petList = sheltered_atrepository.findPetsByshelter_id(shelterID);
+        return petList;
     }
 
-    public void ViewShelterReviews() {
-        // TODO implement here
-    }
-
-    public void ViewAdoptionApplications_Current() {
+    public void ViewAdoptionApplications_Current(int shelterID) {
         // TODO implement here
     }
 
-    public void ViewAdoptionApplications_History() {
+    public void ViewAdoptionApplications_History(int shelterID) {
         // TODO implement here
     }
 
@@ -69,14 +74,29 @@ public class ShelterService {
         return null;
     }
 
-    public String AddPet() {
-        // TODO implement here
-        return null;
+    public String AddPet(pet mypet, int shelterID) {
+        shelter myshelter = shelterrepository.findById(shelterID).orElse(null);
+        if (myshelter == null) {
+            return "Shelter Not Found";
+        }
+        sheltered_at newsheltered_at = sheltered_at.builder()
+                .pet(mypet)
+                .shelter(myshelter)
+                .start_date(new Date(System.currentTimeMillis()))
+                .end_date(null)
+                .build();
+        sheltered_atrepository.save(newsheltered_at);
+
+        return "Done";
     }
 
-    public String EditPetInformation(){
-        // TODO implement here
-        return null;
+    public String EditPetInformation(pet mypet) {
+        pet pet1 = petrepository.findById(mypet.getId()).orElse(null);
+        if (pet1 == null) {
+            return "Pet Not Found";
+        }
+        petrepository.save(mypet);
+        return "Done";
     }
 
     public String AddDocumentForThePet() {
@@ -84,9 +104,18 @@ public class ShelterService {
         return null;
     }
 
-    public String RemovePet() {
+    public String RemovePet(int petID, int shelterID) {
+        shelter myshelter = shelterrepository.findById(shelterID).orElse(null);
+        if (myshelter == null) {
+            return "Shelter Not Found";
+        }
+        pet mypet = petrepository.findById(petID).orElse(null);
+        if (mypet == null) {
+            return "Pet Not Found";
+        }
+        //sheltered_atrepository.deleteBypet_idAndshelter_id(petID,shelterID);
         // TODO implement here
-        return null;
+        return "Done";
     }
 
 }
