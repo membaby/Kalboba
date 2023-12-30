@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface shelterRepository extends JpaRepository<shelter, Integer>, JpaSpecificationExecutor<shelter> {
-    @Query("SELECT MAX(s.id) FROM shelter s")
+    @Query("SELECT LAST_INSERT_ID();")
     Integer findMaxId();
 }

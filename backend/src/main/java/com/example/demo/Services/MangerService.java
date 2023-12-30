@@ -96,21 +96,25 @@ public class MangerService {
         // TODO implement here
     }
 
+    private synchronized int saveShelter(shelter sh) {
+        shelterrepository.save(sh);
+        return shelterrepository.findMaxId();
+    }
+
     public String AddShelter(shelter newShelter,int managerID) {
         if (newShelter.getId() == null) {
             manager newmanager = ManagerRepository.findById(managerID).orElse(null);
             if (newmanager == null) {
                 return "Manager Not Found";
             }
-            Integer nextID = shelterrepository.findMaxId() + 1;
-            newShelter.setId(nextID);
-            shelterrepository.save(newShelter);
+
+            int shelterID = saveShelter(newShelter);
 
             manages newmanages = manages.builder()
                     .manager(newmanager)
                     .manager_id(newmanager.getId())
                     .shelter(newShelter)
-                    .shelter_id(newShelter.getId())
+                    .shelter_id(shelterID)
                     .start_date(new Date(System.currentTimeMillis()))
                     .end_date(null)
                     .build();
