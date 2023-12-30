@@ -113,7 +113,7 @@ public class ShelterService {
         if (mypet == null) {
             return "Pet Not Found";
         }
-        //sheltered_atrepository.deleteBypet_idAndshelter_id(petID,shelterID);
+        petrepository.delete(mypet);
         // TODO implement here
         return "Done";
     }

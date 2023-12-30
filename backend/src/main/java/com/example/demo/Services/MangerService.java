@@ -102,10 +102,15 @@ public class MangerService {
             if (newmanager == null) {
                 return "Manager Not Found";
             }
+            Integer nextID = shelterrepository.findMaxId() + 1;
+            newShelter.setId(nextID);
+            shelterrepository.save(newShelter);
 
             manages newmanages = manages.builder()
                     .manager(newmanager)
+                    .manager_id(newmanager.getId())
                     .shelter(newShelter)
+                    .shelter_id(newShelter.getId())
                     .start_date(new Date(System.currentTimeMillis()))
                     .end_date(null)
                     .build();

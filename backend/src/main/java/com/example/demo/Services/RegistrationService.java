@@ -57,7 +57,7 @@ public class RegistrationService {
             else if (user == User_class.Staff) {
                 return RegisterStaff(account);
             }
-            else if (user == User_class.Manger) {
+            else if (user == User_class.Manager) {
                 return RegisterManager(account);
             }
             else {
