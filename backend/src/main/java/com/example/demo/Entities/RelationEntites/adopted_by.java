@@ -27,7 +27,7 @@ public class adopted_by {
         @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
         @JoinColumn(name = "pet_id", referencedColumnName = "id")
         private com.example.demo.Entities.PetEntities.pet pet;
-        
+
         @MapsId("adopter_id")
         @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
         @JoinColumn(name = "adopter_id", referencedColumnName = "id")

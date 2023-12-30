@@ -3,9 +3,15 @@ package com.example.demo.Services;
 import com.example.demo.Entities.AccountEntites.shelter;
 import com.example.demo.Entities.AccountEntites.staff;
 import com.example.demo.Entities.PetEntities.pet;
+import com.example.demo.Entities.RecordsEntities.Status;
+import com.example.demo.Entities.RecordsEntities.adoption_applicationID;
+import com.example.demo.Entities.RecordsEntities.adoption_application_closed;
+import com.example.demo.Entities.RecordsEntities.adoption_application_open;
 import com.example.demo.Entities.RelationEntites.sheltered_at;
 import com.example.demo.Repositories.PetRepositories.petRepository;
 import com.example.demo.Repositories.AccountRepositories.shelterRepository;
+import com.example.demo.Repositories.RecordsRepositories.adoption_application_closedRepository;
+import com.example.demo.Repositories.RecordsRepositories.adoption_application_openRepository;
 import com.example.demo.Repositories.RelationRepositories.sheltered_atRepository;
 import com.example.demo.Repositories.RelationRepositories.works_atRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,18 +27,24 @@ public class ShelterService {
     private works_atRepository works_atrepository;
     private sheltered_atRepository sheltered_atrepository;
     private petRepository petrepository;
+    private adoption_application_closedRepository adoption_application_currentrepository;
+    private adoption_application_openRepository adoption_application_openrepository;
 
     @Autowired
     public ShelterService(
             shelterRepository shelterrepository,
             works_atRepository works_atrepository,
             sheltered_atRepository sheltered_atrepository,
-            petRepository petrepository
+            petRepository petrepository,
+            adoption_application_closedRepository adoption_application_currentrepository,
+            adoption_application_openRepository adoption_application_openrepository
     ) {
         this.shelterrepository = shelterrepository;
         this.works_atrepository = works_atrepository;
         this.sheltered_atrepository = sheltered_atrepository;
         this.petrepository = petrepository;
+        this.adoption_application_currentrepository = adoption_application_currentrepository;
+        this.adoption_application_openrepository = adoption_application_openrepository;
     }
 
     public shelter ViewShelterInformation(int shelterID) {
@@ -51,27 +63,65 @@ public class ShelterService {
         return petList;
     }
 
-    public void ViewAdoptionApplications_Current(int shelterID) {
+    public List<adoption_application_closed> ViewAdoptionApplications_History(int shelterID) {
+        List<adoption_application_closed> adoption_application_currentList = adoption_application_currentrepository.findAdoption_application_currentsByshelter_id(shelterID);
+        return adoption_application_currentList;
         // TODO implement here
     }
 
-    public void ViewAdoptionApplications_History(int shelterID) {
+    public List<adoption_application_open> ViewAdoptionApplications_Current(int shelterID) {
+        List<adoption_application_open> adoption_application_openList = adoption_application_openrepository.findAdoption_application_opensByshelter_id(shelterID);
+        return adoption_application_openList;
         // TODO implement here
     }
 
-    public String AcceptAdoptionApplication_InProgress() {
+    public String AcceptAdoptionApplication_UnderReview(Integer petID, Integer adopterID, Integer shelterID) {
+        adoption_application_open app = adoption_application_openrepository.findById(new adoption_applicationID(petID, adopterID, shelterID)).orElse(null);
+        if (app == null) {
+            return "Application Not Found";
+        }
+        app.setStatus(Status.UnderReview);
+        adoption_application_openrepository.save(app);
+
         // TODO implement here
-        return null;
+        return "Done";
     }
 
-    public String AcceptAdoptionApplication_Done() {
+    public String AcceptAdoptionApplication_InProgress(Integer petID, Integer adopterID, Integer shelterID) {
+        adoption_application_open app = adoption_application_openrepository.findById(new adoption_applicationID(petID, adopterID, shelterID)).orElse(null);
+        if (app == null) {
+            return "Application Not Found";
+        }
+        app.setStatus(Status.Accepted_Open);
+        adoption_application_openrepository.save(app);
         // TODO implement here
-        return null;
+        return "Done";
     }
 
-    public String RejectAdoptionApplication() {
+    public String AcceptAdoptionApplication_Done(Integer petID, Integer adopterID, Integer shelterID) {
+        adoption_application_open app = adoption_application_openrepository.findById(new adoption_applicationID(petID, adopterID, shelterID)).orElse(null);
+        if (app == null) {
+            return "Application Not Found";
+        }
+        app.setStatus(Status.Accepted_Completed);
+        adoption_application_openrepository.save(app);
         // TODO implement here
-        return null;
+        return "Done";
+    }
+
+    public String RejectAdoptionApplication(Integer petID, Integer adopterID, Integer shelterID) {
+        adoption_application_open app = adoption_application_openrepository.findById(new adoption_applicationID(petID, adopterID, shelterID)).orElse(null);
+        if (app == null) {
+            return "Application Not Found";
+        }
+        app.setStatus(Status.Rejected);
+        adoption_application_openrepository.save(app);
+        // TODO implement here
+        return "Done";
+    }
+    private Integer SavePet(pet mypet) {
+        petrepository.save(mypet);
+        return petrepository.findMaxId();
     }
 
     public String AddPet(pet mypet, int shelterID) {
@@ -79,9 +129,12 @@ public class ShelterService {
         if (myshelter == null) {
             return "Shelter Not Found";
         }
+        mypet.setId(SavePet(mypet));
         sheltered_at newsheltered_at = sheltered_at.builder()
                 .pet(mypet)
+                .pet_id(mypet.getId())
                 .shelter(myshelter)
+                .shelter_id(shelterID)
                 .start_date(new Date(System.currentTimeMillis()))
                 .end_date(null)
                 .build();
@@ -114,6 +167,11 @@ public class ShelterService {
             return "Pet Not Found";
         }
         petrepository.delete(mypet);
+        mypet = petrepository.findById(petID).orElse(null);
+        if (mypet == null) {
+            return "Pet Not Found";
+        }
+        sheltered_atrepository.deleteBypet_id(petID);
         // TODO implement here
         return "Done";
     }

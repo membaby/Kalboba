@@ -14,4 +14,5 @@ public interface sheltered_atRepository extends JpaRepository<sheltered_at, shel
     List<pet> findPetsByshelter_id(Integer shelterID);
 
 
+    void deleteBypet_id(int petID);
 }
