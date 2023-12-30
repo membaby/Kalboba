@@ -10,5 +10,4 @@ import java.sql.Date;
 
 @Repository
 public interface works_atRepository extends JpaRepository<works_at, works_atID>, JpaSpecificationExecutor<works_at> {
-    void AddStaffToShelter(Integer id, Integer shelterID, Date date, String staffType);
 }

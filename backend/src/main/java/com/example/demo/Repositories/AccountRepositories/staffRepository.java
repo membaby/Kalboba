@@ -7,5 +7,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface staffRepository extends JpaRepository<staff, Integer>, JpaSpecificationExecutor<staff> {
-    staff findByEmail(String staffEmail);
 }
