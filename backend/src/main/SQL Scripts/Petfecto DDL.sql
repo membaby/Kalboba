@@ -112,7 +112,7 @@ CREATE TABLE works_at (
 
 CREATE TABLE species (
 	species VARCHAR(50) NOT NULL,
-    PRIMARY KEY (specie)
+    PRIMARY KEY (species)
 );
 
 CREATE TABLE breed (
@@ -142,22 +142,23 @@ CREATE TABLE pet (
 );
 ALTER TABLE pet AUTO_INCREMENT = 100;
 
--- I: on type_no
 CREATE TABLE doc_type (
 	type_no INT NOT NULL AUTO_INCREMENT,
     type_name VARCHAR(70) NOT NULL UNIQUE,
     PRIMARY KEY (type_no)
 );
 
--- I: on pet_id
+-- I: on pet_id (documents are associated with a pet)
 CREATE TABLE pet_doc (
+	entry_id INT NOT NULL AUTO_INCREMENT,
 	pet_id INT NOT NULL,
     doctype INT NOT NULL,
     document MEDIUMBLOB NOT NULL,
-    PRIMARY KEY (pet_id, doctype),
+    PRIMARY KEY (entry_id),
     FOREIGN KEY (pet_id) REFERENCES pet(id),
     FOREIGN KEY (doctype) REFERENCES doc_type(type_no)
 );
+ALTER TABLE pet_doc AUTO_INCREMENT = 100;
 
 -- I: on shelter_id (staff query to view their shelter's pets)
 -- T: Inserting a record into this table deletes records with same pet_id in adopted_by 
