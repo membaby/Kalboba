@@ -11,11 +11,13 @@ CREATE TABLE user_account (
     user_class ENUM('Admin', 'Manager', 'Staff', 'Adopter') NOT NULL,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
-    password_hash INT NOT NULL, -- Requires backend hashing and length-validation
+    password_hash VARCHAR(255) NOT NULL, -- Requires backend hashing and length-validation
     email VARCHAR(255) UNIQUE,
     phone_no VARCHAR(15),
     address VARCHAR(200),
     verified BOOL NOT NULL DEFAULT FALSE,
+    gender ENUM('M', 'F') NOT NULL,
+    birthdate DATE NOT NULL,
     PRIMARY KEY (id)
 );
 ALTER TABLE user_account AUTO_INCREMENT = 100;
@@ -26,7 +28,7 @@ ALTER TABLE user_account AUTO_INCREMENT = 100;
 -- Permissions: No insertion (only by account creation trigger).
 CREATE TABLE verification (
 	account_id INT NOT NULL,
-    time_stamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    time_stamp TIMESTAMP NOT NULL DEFAULT (CURRENT_TIMESTAMP + INTERVAL 24 HOUR),
     otp VARCHAR(10) NOT NULL,
     PRIMARY KEY (account_id, time_stamp),
     FOREIGN KEY (account_id) REFERENCES user_account(id)
@@ -109,20 +111,21 @@ CREATE TABLE works_at (
 );
 
 CREATE TABLE species (
-	species_name VARCHAR(50) NOT NULL,
-    PRIMARY KEY (species_name)
+	species VARCHAR(50) NOT NULL,
+    PRIMARY KEY (specie)
 );
 
 CREATE TABLE breed (
 	species VARCHAR(50) NOT NULL,
     breed VARCHAR(70) NOT NULL,
     PRIMARY KEY (species, breed),
-    FOREIGN KEY (species) REFERENCES species(species_name)
+    FOREIGN KEY (species) REFERENCES species(species)
 );
 
 -- I: on id
 CREATE TABLE pet (
 	id INT NOT NULL AUTO_INCREMENT,
+	pet_name VARCHAR(100) NOT NULL DEFAULT 'Unnamed',
     species VARCHAR(50) NOT NULL,
     breed VARCHAR(70) NOT NULL,
     color VARCHAR(50) NOT NULL,
@@ -132,7 +135,7 @@ CREATE TABLE pet (
     behavior VARCHAR(250) NOT NULL DEFAULT 'This pet\'s behavior has no description yet!',
     gender ENUM('M','F','U') NOT NULL,
     health VARCHAR(250) NOT NULL DEFAULT 'This pet\'s health status has no description yet!',
-    fertility ENUM('fertile','infertile','spayed/neutered','unknown'),
+    fertility ENUM('fertile', 'infertile', 'spayed_neutered', 'unknown') NOT NULL DEFAULT 'unknown',
     adopted BOOL NOT NULL DEFAULT FALSE,
     PRIMARY KEY (id),
     FOREIGN KEY (species, breed) REFERENCES breed(species, breed)
@@ -151,6 +154,7 @@ CREATE TABLE pet_doc (
 	pet_id INT NOT NULL,
     doctype INT NOT NULL,
     document MEDIUMBLOB NOT NULL,
+    PRIMARY KEY (pet_id, doctype),
     FOREIGN KEY (pet_id) REFERENCES pet(id),
     FOREIGN KEY (doctype) REFERENCES doc_type(type_no)
 );
@@ -178,7 +182,7 @@ CREATE TABLE adoption_application_open (
     adopter_id INT NOT NULL,
     shelter_id INT NOT NULL,
     time_stamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    app_status ENUM('Unopened', 'Under Review', 'Rejected', 'Accepted (in progress)', 'Accepted (completed)') NOT NULL DEFAULT 'Unopened',
+    app_status ENUM('Unopened', 'UnderReview', 'Rejected', 'Accepted_Open', 'Accepted_Completed') NOT NULL DEFAULT 'Unopened',
     first_pet BOOL NOT NULL, -- Required field
     children_ages VARCHAR(500) NOT NULL, -- Required field
     place_for_pet VARCHAR(500) NOT NULL, -- Required field
@@ -197,7 +201,7 @@ CREATE TABLE adoption_application_closed (
     adopter_id INT NOT NULL,
     shelter_id INT NOT NULL,
     time_stamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    app_status ENUM('Rejected', 'Accepted (completed)') NOT NULL,
+    app_status ENUM('Rejected', 'Accepted_Completed') NOT NULL,
     first_pet BOOL NOT NULL, -- Required field
     children_ages VARCHAR(500) NOT NULL, -- Required field
     place_for_pet VARCHAR(500) NOT NULL, -- Required field
