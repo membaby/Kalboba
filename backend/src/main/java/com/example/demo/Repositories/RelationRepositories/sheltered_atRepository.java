@@ -1,5 +1,6 @@
 package com.example.demo.Repositories.RelationRepositories;
 
+import com.example.demo.Entities.AccountEntites.shelter;
 import com.example.demo.Entities.PetEntities.pet;
 import com.example.demo.Entities.RelationEntites.sheltered_at;
 import com.example.demo.Entities.RelationEntites.sheltered_atID;
@@ -15,4 +16,6 @@ public interface sheltered_atRepository extends JpaRepository<sheltered_at, shel
 
 
     void deleteBypet_id(int petID);
+
+    shelter findShelterBypet_id(Integer petId);
 }

@@ -11,4 +11,6 @@ import java.util.List;
 @Repository
 public interface adoption_application_openRepository extends JpaRepository<adoption_application_open, adoption_applicationID>, JpaSpecificationExecutor<adoption_application_open> {
     List<adoption_application_open> findAdoption_application_opensByshelter_id(int shelterID);
+
+    List<adoption_application_open> findAdoption_application_opensByadopter_id(Integer adopterID);
 }
