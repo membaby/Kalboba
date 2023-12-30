@@ -10,4 +10,6 @@ import java.sql.Date;
 
 @Repository
 public interface works_atRepository extends JpaRepository<works_at, works_atID>, JpaSpecificationExecutor<works_at> {
+    static void deleteBystaff_idAndshelter_id(Integer id, Integer id1) {
+    }
 }

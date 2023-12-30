@@ -17,22 +17,16 @@ import lombok.NoArgsConstructor;
 public class adoption_application_open {
 
         @Id
-        @MapsId("pet_id")
-        @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-        @JoinColumn(name = "pet_id", referencedColumnName = "id")
-        private com.example.demo.Entities.PetEntities.pet pet_id;
+        @Column(name = "pet_id")
+        private int pet_id;
 
         @Id
-        @MapsId("adopter_id")
-        @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-        @JoinColumn(name = "adopter_id", referencedColumnName = "id")
-        private com.example.demo.Entities.AccountEntites.adopter adopter_id;
+        @Column(name = "adopter_id")
+        private int adopter_id;
 
         @Id
-        @MapsId("shelter_id")
-        @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-        @JoinColumn(name = "shelter_id", referencedColumnName = "id")
-        private com.example.demo.Entities.AccountEntites.shelter shelter_id;
+        @Column(name = "shelter_id")
+        private int shelter_id;
 
         @Column(name = "time_stamp")
         private java.sql.Timestamp time_stamp;
@@ -54,5 +48,20 @@ public class adoption_application_open {
 
         @Column(name = "adopters_time")
         private String adopters_time;
+
+        @MapsId("pet_id")
+        @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+        @JoinColumn(name = "pet_id", referencedColumnName = "id")
+        private com.example.demo.Entities.PetEntities.pet pet;
+
+        @MapsId("adopter_id")
+        @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+        @JoinColumn(name = "adopter_id", referencedColumnName = "id")
+        private com.example.demo.Entities.AccountEntites.adopter adopter;
+
+        @MapsId("shelter_id")
+        @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+        @JoinColumn(name = "shelter_id", referencedColumnName = "id")
+        private com.example.demo.Entities.AccountEntites.shelter shelter;
 
 }

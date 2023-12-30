@@ -2,15 +2,21 @@ package com.example.demo.Services;
 
 import com.example.demo.Entities.AccountEntites.shelter;
 import com.example.demo.Entities.AccountEntites.staff;
+import com.example.demo.Entities.AccountEntites.user_account;
+import com.example.demo.Entities.RelationEntites.manages;
 import com.example.demo.Entities.RelationEntites.works_at;
 import com.example.demo.Entities.RelationEntites.works_atID;
 import com.example.demo.Repositories.AccountRepositories.staffRepository;
+import com.example.demo.Repositories.AccountRepositories.user_accountRepository;
+import com.example.demo.Repositories.RelationRepositories.managesRepository;
 import com.example.demo.Repositories.RelationRepositories.shelterRepository;
 import com.example.demo.Repositories.RelationRepositories.works_atRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class MangerService {
@@ -18,15 +24,23 @@ public class MangerService {
     private staffRepository staffrepository;
     private works_atRepository works_atrepository;
 
+    private user_accountRepository accountRepository;
+
+    private managesRepository mannagesrepository;
+
     @Autowired
     public MangerService(
             shelterRepository shelterrepository,
             staffRepository staffrepository,
-            works_atRepository works_atrepository
+            works_atRepository works_atrepository,
+            user_accountRepository accountRepository,
+            managesRepository mannagesrepository
     ) {
         this.shelterrepository = shelterrepository;
         this.staffrepository = staffrepository;
         this.works_atrepository = works_atrepository;
+        this.accountRepository = accountRepository;
+        this.mannagesrepository = mannagesrepository;
     }
 
 
@@ -44,40 +58,64 @@ public class MangerService {
     }
 
     public String AddStaffToShelter(String staffEmail,Integer shelterID,String staffType) {
-        /*staff newStaff = staffrepository.findByEmail(staffEmail);
+        user_account newstaff = accountRepository.findByEmail(staffEmail);
         shelter myshelter = shelterrepository.findById(shelterID).orElse(null);
-        if (newStaff == null) {
+        if (newstaff == null) {
             return "Staff Not Found";
         }
         if (myshelter == null) {
             return "Shelter Not Found";
         }
-        Date date = new Date(System.currentTimeMillis());
-        works_atID works_atID = new works_atID(newStaff,myshelter);
-        works_at newWorks_at = works_at.builder()
+        works_at newworks_at = works_at.builder()
+                .staff_id(newstaff.getId())
+                .shelter_id(myshelter.getId())
+                .staff_role(staffType)
+                .start_date(new Date(System.currentTimeMillis()))
+                .end_date(null)
+                .build();
 
-                .date(date)
-                .staffType(staffType)
-                .build();*/
+        works_atrepository.save(newworks_at);
         return "Done";
 
     }
 
     public String RemoveStaffFromShelter(String staffEmail,Integer shelterID) {
-        /*staff newStaff = staffrepository.findByEmail(staffEmail);
+        user_account newstaff = accountRepository.findByEmail(staffEmail);
         shelter myshelter = shelterrepository.findById(shelterID).orElse(null);
-        if (newStaff == null) {
+        if (newstaff == null) {
             return "Staff Not Found";
         }
         if (myshelter == null) {
             return "Shelter Not Found";
-        }*/
+        }
+        works_atRepository.deleteBystaff_idAndshelter_id(newstaff.getId(),myshelter.getId());
         return "Done";
         // TODO implement here
     }
 
-    public void AddShelter(shelter newShelter) {
-        // TODO implement here
+    public String AddShelter(shelter newShelter,int managerID) {
+        if (newShelter.getId() == null) {
+            shelterrepository.save(newShelter);
+            newShelter = shelterrepository.findById(newShelter.getId()).orElse(null);
+            manages newmanages = manages.builder()
+                    .manager_id(managerID)
+                    .shelter_id(newShelter.getId())
+                    .start_date(new Date(System.currentTimeMillis()))
+                    .end_date(null)
+                    .build();
+            mannagesrepository.save(newmanages);
+        }
+        return "Shelter Already Exists";
+    }
+
+    public List<shelter> ViewShelters(int managerID) {
+        List<manages> managesList = mannagesrepository.findAllBymanager_id(managerID);
+        List<shelter> shelterList = new ArrayList<>();
+        for (manages manages : managesList) {
+            shelterList.add(manages.getShelter());
+        }
+        return shelterList;
+
     }
 
 

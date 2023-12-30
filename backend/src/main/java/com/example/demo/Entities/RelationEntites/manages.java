@@ -24,12 +24,18 @@ public class manages {
     private Date end_date;
 
     @Id
+    @Column(name = "manager_id")
+    private int manager_id;
+
+    @Id
+    @Column(name = "shelter_id")
+    private int shelter_id;
+
     @MapsId("manager_id")
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "manager_id", referencedColumnName = "id")
     private com.example.demo.Entities.AccountEntites.manager manager;
 
-    @Id
     @MapsId("shelter_id")
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "shelter_id", referencedColumnName = "id")

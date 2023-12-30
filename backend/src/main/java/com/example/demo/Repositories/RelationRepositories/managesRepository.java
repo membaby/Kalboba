@@ -6,6 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface managesRepository extends JpaRepository<manages, managesID>, JpaSpecificationExecutor<manages> {
+    List<manages> findAllBymanager_id(int managerID);
 }
