@@ -7,6 +7,7 @@ import com.example.demo.Services.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/Register")
@@ -23,9 +24,8 @@ public class RegistrationController {
     }
 
     @RequestMapping("/User")
-    public String RegisterUser(user_accountDTO account) {
-        user_account accountEntity = user_accountmapper.toEntity(account);
-        return registrationService.RegistrationMapper(accountEntity);
+    public String RegisterUser(@RequestBody user_account account) {
+        return registrationService.RegistrationMapper(account);
     }
 
     @RequestMapping("/Verify")
